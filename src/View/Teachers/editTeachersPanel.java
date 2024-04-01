@@ -26,12 +26,12 @@ public class editTeachersPanel extends JPanel {
         editTeacherBtn = new JButton("Edit");
         editTeacherBtn.setBackground(Color.decode("#2ae866"));
 
-        txt_teacher_index.setText("Teacher ID");
-        txt_teacher_id.setText("teacher id");
-        txt_teacher_name.setText("teacher name");
-        txt_teacher_qual.setText("teacher qual");
-        txt_teacher_mob_no.setText("teacher mob_no");
-        txt_teacher_exp.setText("teacher exp");
+        txt_teacher_index.setText("Teacher_Index");
+        txt_teacher_id.setText("teacher_id");
+        txt_teacher_name.setText("teacher_name");
+        txt_teacher_qual.setText("teacher_qual");
+        txt_teacher_mob_no.setText("teacher_mob_no");
+        txt_teacher_exp.setText("teacher_exp");
 
         this.setLayout(new GridLayout(8,1,5,5));
         add(txt_teacher_index);

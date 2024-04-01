@@ -171,9 +171,10 @@ public class Controller {
                 System.out.println("Delete Teacher Button Clicked");
                 String txt_teacher_idx = view.getMtf().getT_iPanel().getDelete_teacher().getTxt_del_teacher().getText();
                 try {
-                    model.getMt1().deleteTeacher(Integer.parseInt(txt_teacher_idx)-1);
-                    //model.getMt1().setFirstLineToDisplay(0);
+                    int id = model.getMt1().deleteTeacher(Integer.parseInt(txt_teacher_idx)-1);
+                    model.getMe1().deleteEnrollConditional(id);
                     view.tableUpdateTeacher(model.getMt1().getLines(model.getMt1().getFirstLineToDisplay(),model.getMt1().getLastLineToDisplay()),model.getMt1().getHeaders());
+                    view.tableUpdateEnroll(model.getMe1().getLines(model.getMe1().getFirstLineToDisplay(),model.getMe1().getLastLineToDisplay()),model.getMe1().getHeaders());
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -337,9 +338,10 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 String txt_module_idx = view.getMmf().getM_iPanel().getDelete_module().getTxt_del_module().getText();
                 try {
-                    model.getMm1().deleteModule(Integer.parseInt(txt_module_idx)-1);
-                    //model.getMm1().setFirstLineToDisplay(0);
-                    view.tableUpdateTeacher(model.getMm1().getLines(model.getMm1().getFirstLineToDisplay(),model.getMm1().getLastLineToDisplay()),model.getMm1().getHeaders());
+                    int id = model.getMm1().deleteModule(Integer.parseInt(txt_module_idx)-1);
+                    model.getMe1().deleteEnrollConditional(id);
+                    view.tableUpdateModule(model.getMm1().getLines(model.getMm1().getFirstLineToDisplay(),model.getMm1().getLastLineToDisplay()),model.getMm1().getHeaders());
+                    view.tableUpdateEnroll(model.getMe1().getLines(model.getMe1().getFirstLineToDisplay(),model.getMe1().getLastLineToDisplay()),model.getMe1().getHeaders());
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -424,14 +426,14 @@ public class Controller {
         view.getMef().getE_iPanel().getAdd_enroll().getAddEnrollBtn().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int e_id = Integer.parseInt(view.getMef().getE_iPanel().getAdd_enroll().getTxt_enroll_id().getText());
+                //int e_id = Integer.parseInt(view.getMef().getE_iPanel().getAdd_enroll().getTxt_enroll_id().getText());
                 String e_date = view.getMef().getE_iPanel().getAdd_enroll().getEnroll_date().getText();
                 int t_sal = Integer.parseInt(view.getMef().getE_iPanel().getAdd_enroll().getTeacher_sal().getText());
                 int t_id = Integer.parseInt(view.getMef().getE_iPanel().getAdd_enroll().getTxt_teacher_id().getText());
                 int m_id = Integer.parseInt(view.getMef().getE_iPanel().getAdd_enroll().getTxt_module_id().getText());
 
                 try {
-                    model.getMe1().addNewEnroll(e_id,t_id-1 ,m_id-1,t_sal,e_date);
+                    model.getMe1().addNewEnroll(t_id ,m_id,t_sal,e_date);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -444,13 +446,13 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 String e_index = view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_index().getText();
                 model.getMe1().readEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json");
-                int e_id = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getE_count();
+                //int e_id = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getSerialNo();
                 String e_date = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getEnroll_date();
                 int t_sal = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getTeacher_sal();
                 int t_id = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getTeacher_temp().getTeacher_id();
                 int m_id = model.getMe1().getTable().get(Integer.parseInt(e_index)-1).getModule_temp().getModule_id();
 
-                view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_id().setText(String.valueOf(e_id));
+                //view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_id().setText(String.valueOf(e_id));
                 view.getMef().getE_iPanel().getEdit_enroll().getTeacher_sal().setText(String.valueOf(t_sal));
                 view.getMef().getE_iPanel().getEdit_enroll().getTxt_module_id().setText(String.valueOf(m_id));
                 view.getMef().getE_iPanel().getEdit_enroll().getTxt_teacher_id().setText(String.valueOf(t_id));
@@ -464,13 +466,13 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
                     int txt_index = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_index().getText());
-                    int e_id = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_id().getText());
+                    //int e_id = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTxt_enroll_id().getText());
                     int t_id = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTxt_teacher_id().getText());
                     int m_id = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTxt_module_id().getText());
                     String date = view.getMef().getE_iPanel().getEdit_enroll().getEnroll_date().getText();
                     int t_sal = Integer.parseInt(view.getMef().getE_iPanel().getEdit_enroll().getTeacher_sal().getText());
 
-                    model.getMe1().editEnroll(txt_index-1, e_id, t_id-1, m_id-1, t_sal, date);
+                    model.getMe1().editEnroll(txt_index-1, t_id, m_id, t_sal, date);
                     //model.getMe1().setFirstLineToDisplay(0);
                     view.tableUpdateEnroll(model.getMe1().getLines(model.getMe1().getFirstLineToDisplay(),model.getMe1().getLastLineToDisplay()),model.getMe1().getHeaders());
                 } catch (IOException ex) {
@@ -486,7 +488,6 @@ public class Controller {
                 try {
                     String txt_enroll_idx = view.getMef().getE_iPanel().getDelete_enroll().getTxt_delete_enroll().getText();
                     model.getMe1().deleteEnroll(Integer.parseInt(txt_enroll_idx)-1);
-                    //model.getMe1().setFirstLineToDisplay(0);
                     view.tableUpdateEnroll(model.getMe1().getLines(model.getMe1().getFirstLineToDisplay(),model.getMe1().getLastLineToDisplay()),model.getMe1().getHeaders());
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);

@@ -3,19 +3,36 @@ import Model.Teachers.*;
 import Model.Modules.*;
 
 public class Enrolls {
-    int e_count = 0;
+    private static int e_count = 0;
+    int serialNo;
     teacher teacher_temp;
     module module_temp;
     String enroll_date;
     int teacher_sal;
-
-    public Enrolls(int e_id,teacher s, module c, String enroll_date, int salary)
+    public Enrolls(){
+        setE_count(0);
+    }
+    public Enrolls(teacher s, module c, String enroll_date, int salary)
     {
-        setE_count(e_id);
+        setE_count(getE_count()+1);
+        setSerialNo(getE_count());
         setTeacher_temp(s);
         setModule_temp(c);
         setEnroll_date(enroll_date);
         setTeacher_sal(salary);
+    }
+    public Enrolls(int e_id,teacher s, module c, String enroll_date, int salary)
+    {
+        setE_count(getE_count()+1);
+        setSerialNo(e_id);
+        setTeacher_temp(s);
+        setModule_temp(c);
+        setEnroll_date(enroll_date);
+        setTeacher_sal(salary);
+    }
+
+    public void setSerialNo(int serialNo) {
+        this.serialNo = serialNo;
     }
 
     public void setTeacher_temp(teacher teacher_temp) {
@@ -50,11 +67,15 @@ public class Enrolls {
         return teacher_sal;
     }
 
-    public void setE_count(int e_count) {
-        this.e_count = e_count;
+    public static void setE_count(int e_count) {
+        Enrolls.e_count = e_count;
     }
 
-    public int getE_count() {
+    public static int getE_count() {
         return e_count;
+    }
+
+    public int getSerialNo() {
+        return serialNo;
     }
 }

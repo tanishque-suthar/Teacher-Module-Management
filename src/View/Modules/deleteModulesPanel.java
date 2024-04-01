@@ -11,7 +11,7 @@ public class deleteModulesPanel extends JPanel {
         deleteModuleBtn = new JButton("Delete Module");
         deleteModuleBtn.setBackground(Color.decode("#ed5f4c"));
 
-        txt_del_module.setText("Enter Module ID to delete");
+        txt_del_module.setText("Enter_Module_Index_to_delete");
 
         this.setLayout(new GridLayout(2,1,5,5));
         add(txt_del_module);

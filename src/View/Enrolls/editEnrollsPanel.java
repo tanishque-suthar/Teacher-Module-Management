@@ -27,18 +27,16 @@ public class editEnrollsPanel extends JPanel {
         getEnrollBtn = new JButton("Get Details");
         getEnrollBtn.setBackground(Color.decode("#0fa8d6"));
 
-        txt_enroll_index.setText("Enroll ID to edit");
-        txt_enroll_id.setText("Enroll_ID");
+        txt_enroll_index.setText("Serial No. to edit");
         txt_teacher_id.setText("teacher_id");
         txt_module_id.setText("module_id");
         enroll_date.setText("enrollment_date");
         teacher_sal.setText("teacher_salary");
 
-        setLayout(new GridLayout(7,1,3,3));
+        setLayout(new GridLayout(6,1,3,3));
         getDetailsPanel.add(txt_enroll_index);
         getDetailsPanel.add(getEnrollBtn);
         add(getDetailsPanel);
-        add(txt_enroll_id);
         add(txt_teacher_id);
         add(txt_module_id);
         add(enroll_date);

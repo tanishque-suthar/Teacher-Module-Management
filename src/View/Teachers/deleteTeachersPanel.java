@@ -10,7 +10,7 @@ public class deleteTeachersPanel extends JPanel {
         txt_del_teacher = new JTextField();
         deleteTeacherBtn = new JButton("Delete Teacher");
         deleteTeacherBtn.setBackground(Color.decode("#ed5f4c"));
-        txt_del_teacher.setText("Enter Teacher ID to delete");
+        txt_del_teacher.setText("Enter_Teacher_Index_to_delete");
 
         this.setLayout(new GridLayout(2,1,5,5));
         add(txt_del_teacher);

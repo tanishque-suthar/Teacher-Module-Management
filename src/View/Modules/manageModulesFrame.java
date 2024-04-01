@@ -11,7 +11,7 @@ public class manageModulesFrame extends JFrame {
         m_iPanel = new initialModulesPanel();
         add(m_iPanel);
         pack();
-        setSize(1000, 1000);
+        setSize(1400, 800);
     }
 
     public void setM_iPanel(initialModulesPanel m_iPanel) {

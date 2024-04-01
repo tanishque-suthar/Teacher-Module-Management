@@ -141,13 +141,12 @@ public class manageModules extends fileHandlingModules implements Displayable {
     public ArrayList<module> getModules() {
         return modules;
     }
-    public void deleteModule(int index) throws IOException{
+    public int deleteModule(int index) throws IOException{
         readModuleJsonFile("src/Model/Modules/modules.json");
+        int id = modules.get(index).getModule_id();
         modules.remove(index);
-        for(int i=index;i<modules.size();i++){
-            modules.get(i).setModule_id(i+1);
-        }
         writeModuleJsonFile("src/Model/Modules/modules.json",modules);
+        return id;
     }
     public void editModule(int index, int m_id,int s_id, String sub_name,int sub_cred,String module_name,int mod_cred,String tb_name) throws IOException{
         readModuleJsonFile("src/Model/Modules/modules.json");

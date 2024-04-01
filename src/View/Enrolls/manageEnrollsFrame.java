@@ -11,7 +11,7 @@ public class manageEnrollsFrame extends JFrame {
         e_iPanel = new initialEnrollsPanel();
         add(e_iPanel);
         pack();
-        setSize(500, 600);
+        setSize(1400, 800);
     }
 
     public void setE_iPanel(initialEnrollsPanel e_iPanel) {

@@ -11,7 +11,7 @@ public class manageTeachersFrame extends JFrame {
         t_iPanel = new initialTeachersPanel();
         add(t_iPanel);
         pack();
-        setSize(500, 600);
+        setSize(1400, 750);
     }
 
     public void setT_iPanel(initialTeachersPanel t_iPanel) {

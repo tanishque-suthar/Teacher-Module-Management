@@ -33,7 +33,7 @@ public class editModulesPanel extends JPanel {
         getModulesBtn = new JButton("Get Details");
         getModulesBtn.setBackground(Color.decode("#0fa8d6"));
 
-        module_index.setText("Enter module ID");
+        module_index.setText("Enter_Module_Index");
         txt_module_id.setText("module_id");
         txt_module_name.setText("module_name");
         txt_module_credits.setText("module_credits");

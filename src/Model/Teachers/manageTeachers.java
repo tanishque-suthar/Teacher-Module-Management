@@ -142,15 +142,13 @@ public class manageTeachers extends fileHandlingTeachers implements Displayable 
         teachers.get(index).setTeacher_qualification(qual);
         teachers.get(index).setTeacher_phone_number(mobno);
         writeTeacherJsonFile("src\\Model\\Teachers\\teachers.json", teachers);
-
     }
-    public void deleteTeacher(int index) throws IOException{
+    public int deleteTeacher(int index) throws IOException{
         readTeacherJsonFile("src\\Model\\Teachers\\teachers.json");
+        int id = teachers.get(index).getTeacher_id();
         teachers.remove(index);
-        for(int i = index;i<teachers.size();i++) {
-            teachers.get(i).setTeacher_id(i+1);
-        }
         writeTeacherJsonFile("src\\Model\\Teachers\\teachers.json", teachers);
+        return id;
     }
 
     public ArrayList<teacher> getTeachers() {

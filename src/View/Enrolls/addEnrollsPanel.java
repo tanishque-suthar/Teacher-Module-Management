@@ -5,41 +5,29 @@ import java.awt.*;
 
 public class addEnrollsPanel extends JPanel {
     JTextField txt_teacher_id;
-    JTextField txt_enroll_id;
     JTextField txt_module_id;
     JTextField enroll_date;
     JTextField teacher_sal;
     JButton addEnrollBtn;
     public addEnrollsPanel()
     {
-        txt_enroll_id = new JTextField();
         txt_teacher_id = new JTextField();
         txt_module_id = new JTextField();
         enroll_date = new JTextField();
         teacher_sal = new JTextField();
         addEnrollBtn = new JButton("Add Enrollment");
         addEnrollBtn.setBackground(Color.decode("#2ae866"));
-        txt_enroll_id.setText("Enroll_ID");
         txt_teacher_id.setText("teacher_id");
         txt_module_id.setText("module_id");
         enroll_date.setText("enrollment_date");
         teacher_sal.setText("teacher_salary");
 
-        setLayout(new GridLayout(6,1,5,5));
-        add(txt_enroll_id);
+        setLayout(new GridLayout(5,1,5,5));
         add(txt_teacher_id);
         add(txt_module_id);
         add(enroll_date);
         add(teacher_sal);
         add(addEnrollBtn);
-    }
-
-    public void setTxt_enroll_id(JTextField txt_enroll_id) {
-        this.txt_enroll_id = txt_enroll_id;
-    }
-
-    public JTextField getTxt_enroll_id() {
-        return txt_enroll_id;
     }
 
     public void setTxt_module_id(JTextField txt_module_id) {

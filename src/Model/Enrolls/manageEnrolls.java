@@ -37,6 +37,7 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
             JsonNode rootNode = objectMapper.readTree(new File(file_path));
             // Iterate through JSON array
             if (rootNode.isArray()) {
+                new Enrolls();
                 enrollment_data.clear();
                 for (JsonNode node : rootNode) {
                     //int check1 = 0,check2=0;
@@ -90,7 +91,7 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
         for(int i = 0; i < enrolls.size(); i++)
         {
             HashMap <String, Object> row = new HashMap<>();
-            row.put("e_temp_id", enrolls.get(i).getE_count());
+            row.put("e_temp_id", enrolls.get(i).getSerialNo());
             row.put("teacher_temp", enrolls.get(i).getTeacher_temp().getTeacher_id());
             row.put("module_temp", enrolls.get(i).getModule_temp().getModule_id());
             row.put("enroll_date", enrolls.get(i).getEnroll_date());
@@ -102,7 +103,7 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
 
     public ArrayList<String> getHeaders() {
         ArrayList<String> headers = new ArrayList<String>();
-        headers.add("Enroll ID");
+        headers.add("Serial Number");
         headers.add("Teacher Id");
         headers.add("Teacher Name");
         headers.add("Module Id");
@@ -116,7 +117,7 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
     @Override
     public ArrayList<String> getLine(int line) {
         ArrayList<String> enrollment_details = new ArrayList<String>();
-        enrollment_details.add(String.valueOf(enrollment_data.get(line).getE_count()));
+        enrollment_details.add(String.valueOf(enrollment_data.get(line).getSerialNo()));
         enrollment_details.add(String.valueOf(enrollment_data.get(line).getTeacher_temp().getTeacher_id()));
         enrollment_details.add(String.valueOf(enrollment_data.get(line).getTeacher_temp().getTeacher_fname() + " " + enrollment_data.get(line).getTeacher_temp().getTeacher_lname()));
         enrollment_details.add(String.valueOf(enrollment_data.get(line).getModule_temp().getModule_id()));
@@ -132,7 +133,6 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
 
         for (int i = firstLine; i <= lastLine; i++) {
             enrollment_subset.add(getLine(i));
-            //System.out.println(enrollment_subset.get(i) + " ");
         }
         return enrollment_subset;
     }
@@ -178,9 +178,12 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
     public ArrayList<Enrolls> getTable() {
         return enrollment_data;
     }
-    public void addNewEnroll(int e_id, int t_id, int m_id, int t_sal, String date) throws IOException{
+    public void addNewEnroll(int t_id, int m_id, int t_sal, String date) throws IOException{
         readEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json");
-        Enrolls temp_e = new Enrolls(e_id, teacher_List.get(t_id),module_List.get(m_id), date, t_sal);
+        int t_id_idx = getIndexOfTeacherID(t_id);
+        int m_id_idx = getIndexOfModuleID(m_id);
+
+        Enrolls temp_e = new Enrolls(teacher_List.get(t_id_idx),module_List.get(m_id_idx), date, t_sal);
         enrollment_data.add(temp_e);
         writeEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json",enrollment_data);
     }
@@ -188,17 +191,47 @@ public class manageEnrolls extends FileHandlingEnrolls implements Displayable {
         readEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json");
         enrollment_data.remove(index);
         for(int i = index;i<enrollment_data.size();i++){
-            enrollment_data.get(i).setE_count(i+1);
+            enrollment_data.get(i).setSerialNo(i+1);
         }
         writeEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json",enrollment_data);
     }
-    public void editEnroll(int index, int e_id, int t_id, int m_id, int t_sal, String date) throws IOException{
+    public void editEnroll(int index, int t_id, int m_id, int t_sal, String date) throws IOException{
         readEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json");
+        int t_id_idx = getIndexOfTeacherID(t_id);
+        int m_id_idx = getIndexOfModuleID(m_id);
         enrollment_data.get(index).setEnroll_date(date);
-        enrollment_data.get(index).setE_count(e_id);
+        //enrollment_data.get(index).setSerialNo(e_id);
         enrollment_data.get(index).setTeacher_sal(t_sal);
-        enrollment_data.get(index).setModule_temp(module_List.get(m_id));
-        enrollment_data.get(index).setTeacher_temp(teacher_List.get(t_id));
+        enrollment_data.get(index).setModule_temp(module_List.get(m_id_idx));
+        enrollment_data.get(index).setTeacher_temp(teacher_List.get(t_id_idx));
         writeEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json",enrollment_data);
+    }
+    public void deleteEnrollConditional(int id) throws IOException{
+        readEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json");
+        for(int i = 0;i<enrollment_data.size();i++){
+            if(id == enrollment_data.get(i).getTeacher_temp().getTeacher_id() || id == enrollment_data.get(i).getModule_temp().getModule_id())
+            {
+                deleteEnroll(i);
+            }
+        }
+        writeEnrollsJsonFile("src\\Model\\Enrolls\\Enrolls.json",enrollment_data);
+    }
+    public int getIndexOfTeacherID(int id){
+        for (int i =0;i<teacher_List.size();i++){
+            if(id == teacher_List.get(i).getTeacher_id()){
+                id = i;
+                break;
+            }
+        }
+        return id;
+    }
+    public int getIndexOfModuleID(int id){
+        for (int i =0;i<module_List.size();i++){
+            if(id == module_List.get(i).getModule_id()){
+                id = i;
+                break;
+            }
+        }
+        return id;
     }
 }
